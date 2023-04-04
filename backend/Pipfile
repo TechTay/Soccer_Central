@@ -11,6 +11,7 @@ mysql-connector-python = "*"
 django-cors-headers = "*"
 tzdata = "*"
 mysqlclient = "*"
+django-ratings = "*"
 
 [dev-packages]
 autopep8 = "*"
