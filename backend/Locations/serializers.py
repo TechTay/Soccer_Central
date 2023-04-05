@@ -6,5 +6,5 @@ from .models import Location
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location
-        fields = ['id', 'address', 'date', 'time', 'user_id', 'rating']
+        fields = ['id', 'address', 'date', 'time']
         depth = 1

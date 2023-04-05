@@ -12,6 +12,7 @@ django-cors-headers = "*"
 tzdata = "*"
 mysqlclient = "*"
 django-ratings = "*"
+pillow = "*"
 
 [dev-packages]
 autopep8 = "*"

@@ -1,9 +1,13 @@
-# from django.db import models
+from django.db import models
 from django.contrib.auth.models import AbstractUser
+from Locations.models import Location
 
+def upload_to(instance, filename):
+    return 'images/{filename}'.format(filename=filename)
 
 class User(AbstractUser):
-    pass
+    favorites = models.ManyToManyField(Location)
+    image_url = models.ImageField(upload_to=upload_to, blank=True, null=True)
     '''
     This is a custom version of the built in User class
     It contains all of the built in fields and functionality of the standard User
@@ -15,3 +19,4 @@ class User(AbstractUser):
     # this will add a column to the user table
     # is_student = models.BooleanField('student status', default=False)
 
+    
