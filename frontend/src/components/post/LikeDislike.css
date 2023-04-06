@@ -1,0 +1,14 @@
+button {
+    position: relative;
+    /* top: -28px;
+    left: 35%; */
+    
+}
+
+.active {
+    background-color: rgb(4, 150, 11);
+}
+
+.inactive {
+    background-color: gray;
+}
