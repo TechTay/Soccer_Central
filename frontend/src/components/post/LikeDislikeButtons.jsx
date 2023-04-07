@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "./LikeDislike.css"
 
-const LikeDislikeButton = () => {
+const LikeDislikeButtons = () => {
     
     const [disLikeButton, setDisLikeButton] = useState("inactive");
     const [likeButton, setLikeButton] = useState("inactive");
@@ -25,7 +25,7 @@ const LikeDislikeButton = () => {
             }
     }
 
-    return ( <div>
+    return ( <div className="form">
         <button className={likeButton} onClick={handleLikeClick}>Like</button>
         <button className={disLikeButton} onClick={handleDisLikeClick}>Dislike</button>
         </div>
@@ -34,4 +34,4 @@ const LikeDislikeButton = () => {
 
 
 
-export default LikeDislikeButton
+export default LikeDislikeButtons

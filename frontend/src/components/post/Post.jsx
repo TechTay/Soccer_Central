@@ -1,4 +1,4 @@
-import LikeDislikeButton from "./LikeDislikeButton"
+import LikeDislikeButton from "./LikeDislikeButtons"
 
 
 
@@ -12,9 +12,9 @@ const Post = (props) => {
     console.log("" + cDay + "/" + cMonth + "/" + cYear + "");
 
     return (<div>
-        <div className="postN">{props.post.name}</div>
-        <div className="postT">{props.post.text} <LikeDislikeButton/></div>
-        
+        <div className="form">{props.post.name}</div>
+        <div className="form">{props.post.text} </div>
+        {/* <LikeDislikeButton/> */}
     </div>)
 }
 

@@ -1,8 +1,12 @@
+import React, { useState } from "react";
+import "./CreatePostForm.css"
+
+
 const CreatePostForm = (props) => {
     const [name, setName] = useState([""]);
     const [text, setText] = useState([""]);
     
-    // const [, setText] = useState([""]);
+    
   
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -22,17 +26,18 @@ const CreatePostForm = (props) => {
   
     return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form style={{ marginBlock: 10 }} className="container" onSubmit={handleSubmit}>
         <label>
-          Name
-          <input type="text" value ={name} onChange={(event) => setName(event.target.value)}/>
+          Title
+          <input style={{ marginBlock: 10 }} type="text" value ={name} onChange={(event) => setName(event.target.value)}/>
         </label>
+        <br></br>
+        <label>
+          Message
+          <input style={{marginRight: 60, padding: 20}} className="form" type="text" value={text} onChange={(event) => setText(event.target.value)} />
+        </label>
+        <button style={{marginLeft: 20, marginTop: 5}} class="btn btn-primary btn-sm" type="submit" >Post</button> 
         
-        <label>
-          Post
-          <input type="text" value={text} onChange={(event) => setText(event.target.value)} />
-        </label>
-        <input type="submit" value="Create" />
       </form>
     </div>
   )};

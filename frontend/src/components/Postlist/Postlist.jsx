@@ -1,4 +1,4 @@
-import Post from "../post/post";
+import Post from "../post/Post";
 
 
 const PostList = (props) => {

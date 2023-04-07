@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
-
+import AddLocationPage from "./pages/AddLocationPage/AddLocationPage";
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
@@ -30,6 +30,7 @@ function App() {
         />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
+        {/* <Route path="/addlocation" element={<AddLocationPage />} /> */}
       </Routes>
       <Footer />
     </div>
