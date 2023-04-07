@@ -15,35 +15,94 @@ const HomePage = () => {
   //TODO: Add an AddCars Page to add a car for a logged in user's garage
   const [user, token] = useAuth();
   const [locations, setLocations] = useState([]);
-  const [posts, setPosts] = useState([{}]);
-  
-  function addNewPost(newPost) {
-    let tempPosts = [newPost, ...posts];
-    setPosts(tempPosts);
+  const [posts, setPosts] = useState([
+    {
+      id: 1,
+      text: "Test 1",
+      likes: 0,
+      dislikes: 0,
+      user_id: 2,
+      user: {
+        id: 2,
+        password:
+          "pbkdf2_sha256$600000$gPTKkHi1uFrAMNDGfhIWiM$eE6yyd8CWZ+v1R5fnicIKrQxGXAKDKR9YRL6zURrgEU=",
+        last_login: null,
+        is_superuser: false,
+        username: "TayDay",
+        first_name: "Tay",
+        last_name: "Parker",
+        email: "Devante.parker15@gmail.com",
+        is_staff: false,
+        is_active: true,
+        date_joined: "2023-04-05T14:34:55.720150Z",
+        image_url: null,
+        groups: [],
+        user_permissions: [],
+        favorites: [],
+      },
+    },
+  ]);
+
+  const [data, setData] = useState([""])
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+  let form_data = new FormData();
+  form_data.append("image_url", data)
   }
+  
+  const fetchlocations = async () => {
+    try {
+      let response = await axios.get(
+        "http://127.0.0.1:8000/api/Locations/all/",
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      setLocations(response.data);
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
+
+  const fetchPost = async () => {
+    try {
+      let response = await axios.get(
+        "http://127.0.0.1:8000/api/Comments/all/",
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      setPosts(response.data);
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
 
   useEffect(() => {
-    const fetchlocations = async () => {
-      try {
-        let response = await axios.get(
-          "http://127.0.0.1:8000/api/Locations/all/",
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
-        setLocations(response.data);
-      } catch (error) {
-        console.log(error.response.data);
-      }
-    };
+    fetchPost();
     fetchlocations();
   }, [token]);
 
   return (
     <div className="form">
       <h1>{user.username}'s Dashboard</h1>
+
+      <form className="form" onSubmit={(e) => handleSubmit(e)} >
+        <input
+        type="file"
+        name="image_url"
+        accept="image/jpeg,image/png,image/gif"
+        onChange={(event) => setData(event.target.files[0])}
+        />
+        <button type='submit'>Submit Image</button>
+    </form>
+
       <form>
         <div
           className="form"
@@ -102,7 +161,7 @@ const HomePage = () => {
                 A news feed of information and chatter by fellow soccer
                 enthustist.
               </div>
-              <CreatePostForm addNewPost={addNewPost} />
+              <CreatePostForm />
               <PostList posts={posts} />
             </Tab>
             <Tab

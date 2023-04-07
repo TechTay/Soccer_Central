@@ -1,36 +1,43 @@
 import React, { useState } from "react";
 import "./CreatePostForm.css"
+import useAuth from "../../hooks/useAuth";
+import axios from "axios";
 
-
-const CreatePostForm = (props) => {
-    const [name, setName] = useState([""]);
+const CreatePostForm = () => {
     const [text, setText] = useState([""]);
+    const [user, token] = useAuth();
     
     
+
   
-    const handleSubmit = (e) => {
+  
+    const handleSubmit = async (e) => {
         e.preventDefault()
         // Create a newPost object
         let newPost = {
-          "name": name,
-          "text": text,
-          
-        }
+          user_id:user.id,
+          text: text,
+          likes: 0,
+          dislikes: 0
+      }
   
-        // use the addNewPost function
-        props.addNewPost(newPost)
+      let response = await axios.post(
+        "http://127.0.0.1:8000/api/comment/",
+        newPost,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
     }
   
-    
     
   
     return (
     <div>
       <form style={{ marginBlock: 10 }} className="container" onSubmit={handleSubmit}>
-        <label>
-          Title
-          <input style={{ marginBlock: 10 }} type="text" value ={name} onChange={(event) => setName(event.target.value)}/>
-        </label>
+       
         <br></br>
         <label>
           Message

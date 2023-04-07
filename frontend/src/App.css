@@ -57,3 +57,7 @@ button:hover {
   font-size: 17px;
 }
 
+body {
+  background-image: url("giero-saaski-HPus1oCcOdk-unsplash.jpg");
+  background-size: cover;
+}
