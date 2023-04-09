@@ -30,6 +30,7 @@ const CreatePostForm = () => {
           },
         }
       );
+      console.log(response.data)
     }
   
     
@@ -43,7 +44,7 @@ const CreatePostForm = () => {
           Message
           <input style={{marginRight: 60, padding: 20}} className="form" type="text" value={text} onChange={(event) => setText(event.target.value)} />
         </label>
-        <button style={{marginLeft: 20, marginTop: 5}} class="btn btn-primary btn-sm" type="submit" >Post</button> 
+        <button style={{marginLeft: 20, marginTop: 5}} class="btn btn-primary btn-sm" value='submit' type="submit" >Post</button> 
         
       </form>
     </div>

@@ -7,7 +7,7 @@ def upload_to(instance, filename):
 
 class User(AbstractUser):
     favorites = models.ManyToManyField(Location)
-    image_url = models.ImageField(upload_to=upload_to, blank=True, null=True)
+   
     '''
     This is a custom version of the built in User class
     It contains all of the built in fields and functionality of the standard User
