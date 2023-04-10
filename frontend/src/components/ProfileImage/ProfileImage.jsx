@@ -5,27 +5,35 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import API from "../../API";
+import axios from "axios";
+import useAuth from "../../hooks/useAuth";
 
 const ProfileImage = () => {
-    const [data, setData] = useState({
-        image_url: "",
-    });
-}
+    const [data, setData] = useState([]);
+    const [user, token] = useAuth();
 
 const handleImageChange = (e) => {
     let newData = { ...data };
-    newData["image_url"] = e.target.files[0];
+    newData = e.target.files[0];
     setData(newData);
 };
 
 const doSubmit = async (e) => {
     e.preventDefault();
-    const response = await API.createMyModelEntry(data);
-    if (response.status === 400) {
-        setErrors(response.data);
-    }
-};
+    let form_data = new FormData();
+  form_data.append("image_url", data)
+  
+  try {
+    let response = await axios
+      .post("http://127.0.0.1:8000/api/images/", form_data, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+  } catch (error) {
+    console.log(error.response);
+  }
+}
 
 return (
 
@@ -54,7 +62,7 @@ return (
         </Button>
     </Form>
 );
-
+}
             
 
 export default ProfileImage

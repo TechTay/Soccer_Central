@@ -8,6 +8,7 @@ import Tab from "react-bootstrap/Tab";
 import AddLocationPage from "../AddLocationPage/AddLocationPage";
 import CreatePostForm from "../../components/CreatePostForm/CreatePostForm";
 import PostList from "../../components/Postlist/Postlist";
+import ProfileImage from "../../components/ProfileImage/ProfileImage";
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
@@ -67,7 +68,8 @@ const HomePage = () => {
     <div className="form">
       <h1>{user.username}'s Dashboard</h1>
 
-      <form className="form" onSubmit={(e) => handleSubmit(e)} >
+    <ProfileImage />
+      {/* <form className="form" onSubmit={(e) => handleSubmit(e)} >
         <input
         type="file"
         name="image_url"
@@ -75,7 +77,7 @@ const HomePage = () => {
         onChange={(event) => setData(event.target.files[0])}
         />
         <button type='submit'>Submit Image</button>
-    </form>
+    </form> */}
 
       
         <div
