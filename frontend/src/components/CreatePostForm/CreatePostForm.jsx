@@ -3,7 +3,7 @@ import "./CreatePostForm.css"
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 
-const CreatePostForm = () => {
+const CreatePostForm = ({fetchPost}) => {
     const [text, setText] = useState([""]);
     const [user, token] = useAuth();
     
@@ -13,7 +13,7 @@ const CreatePostForm = () => {
   
     const handleSubmit = async (e) => {
         e.preventDefault()
-        // Create a newPost object
+
         let newPost = {
           user_id:user.id,
           text: text,
@@ -22,14 +22,15 @@ const CreatePostForm = () => {
       }
   
       let response = await axios.post(
-        "http://127.0.0.1:8000/api/comment/",
+        "http://127.0.0.1:8000/api/Comments/",
         newPost,
         {
           headers: {
             Authorization: "Bearer " + token,
           },
-        }
-      );
+        })
+      .then(()=> fetchPost())
+        // .then(()=> reset())
       console.log(response.data)
     }
   

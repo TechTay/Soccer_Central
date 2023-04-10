@@ -23,4 +23,6 @@ urlpatterns = [
     path('api/Comments/', include('Comments.urls')),
     path('api/Replies/', include('Replies.urls')),
     path('api/Locations/', include('Locations.urls')),
+    path('api/images/', include('images.urls')),
+    path('api/history/', include('history.urls')),
 ]

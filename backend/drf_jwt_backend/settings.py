@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'cars.apps.CarsConfig',  # This app is for example use only
     'Comments',
     'Replies',
-    'Locations'
+    'Locations',
+    'images',
+    'history'
 ]
 
 MIDDLEWARE = [

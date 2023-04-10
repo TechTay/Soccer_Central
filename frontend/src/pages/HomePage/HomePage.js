@@ -15,33 +15,7 @@ const HomePage = () => {
   //TODO: Add an AddCars Page to add a car for a logged in user's garage
   const [user, token] = useAuth();
   const [locations, setLocations] = useState([]);
-  const [posts, setPosts] = useState([
-    {
-      id: 1,
-      text: "Test 1",
-      likes: 0,
-      dislikes: 0,
-      user_id: 2,
-      user: {
-        id: 2,
-        password:
-          "pbkdf2_sha256$600000$gPTKkHi1uFrAMNDGfhIWiM$eE6yyd8CWZ+v1R5fnicIKrQxGXAKDKR9YRL6zURrgEU=",
-        last_login: null,
-        is_superuser: false,
-        username: "TayDay",
-        first_name: "Tay",
-        last_name: "Parker",
-        email: "Devante.parker15@gmail.com",
-        is_staff: false,
-        is_active: true,
-        date_joined: "2023-04-05T14:34:55.720150Z",
-        image_url: null,
-        groups: [],
-        user_permissions: [],
-        favorites: [],
-      },
-    },
-  ]);
+  const [posts, setPosts] = useState([]);
 
   const [data, setData] = useState([""])
 
@@ -103,7 +77,7 @@ const HomePage = () => {
         <button type='submit'>Submit Image</button>
     </form>
 
-      <form>
+      
         <div
           className="form"
           style={{
@@ -173,11 +147,11 @@ const HomePage = () => {
                 Know of a new place to play? Add it here for your fellow soccer
                 enthustist!
               </div>
-              <AddLocationPage />
+              <AddLocationPage fetchlocations= {fetchlocations}/>
             </Tab>
           </Tabs>
         </div>
-      </form>
+      
     </div>
   );
 };
