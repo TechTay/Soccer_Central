@@ -9,6 +9,7 @@ import AddLocationPage from "../AddLocationPage/AddLocationPage";
 import CreatePostForm from "../../components/CreatePostForm/CreatePostForm";
 import PostList from "../../components/Postlist/Postlist";
 import ProfileImage from "../../components/ProfileImage/ProfileImage";
+import AddFavButtons from "../../components/JoinAddFavButtons/AddFavButton";
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
@@ -17,8 +18,8 @@ const HomePage = () => {
   const [user, token] = useAuth();
   const [locations, setLocations] = useState([]);
   const [posts, setPosts] = useState([]);
-
   const [data, setData] = useState([""])
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -39,7 +40,7 @@ const HomePage = () => {
       );
       setLocations(response.data);
     } catch (error) {
-      console.log(error.response.data);
+      console.log(error.response);
     }
   };
 
@@ -89,6 +90,8 @@ const HomePage = () => {
             padding: 50,
           }}
         >
+
+          {/* First tab begins */}
           <Tabs defaultActiveKey="second">
             <Tab
               style={{ fontSize: "15px" }}
@@ -97,9 +100,11 @@ const HomePage = () => {
             >
               <div className="form">Your favorite places to play!</div>
             </Tab>
+
+            {/* Second tab begins */}
             <Tab
               style={{ fontSize: "15px", padding: 10 }}
-              eventKey="second"
+              eventKey="fourth"
               title="Available Games"
             >
               <div className="form">A list of all available pick-up games.</div>
@@ -113,7 +118,8 @@ const HomePage = () => {
                     className="form"
                     style={{ fontSize: "15px", padding: 10 }}
                     key={locations.id}
-                  >
+                  > 
+                    {/* <AddFavButtons /> */}
                     {locations.title}
                     {locations.address}
                     {locations.time}
@@ -121,6 +127,8 @@ const HomePage = () => {
                   </p>
                 ))}
             </Tab>
+
+            {/* third tab begins  */}
             <Tab
               style={{ fontSize: "15px" }}
               eventKey="third"
@@ -128,9 +136,11 @@ const HomePage = () => {
             >
               <div className="form">A list of your recent activities.</div>
             </Tab>
+
+            {/* fourth tab begins  */}
             <Tab
               style={{ fontSize: "15px" }}
-              eventKey="fourth"
+              eventKey="second"
               title="Soccer Social Feed"
             >
               <div className="form">
@@ -140,6 +150,8 @@ const HomePage = () => {
               <CreatePostForm />
               <PostList posts={posts} />
             </Tab>
+
+            {/* fifth tab begins  */}
             <Tab
               style={{ fontSize: "15px" }}
               eventKey="fifth"

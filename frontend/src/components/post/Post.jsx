@@ -1,15 +1,13 @@
 import LikeDislikeButton from "./LikeDislikeButtons"
-
+// import ReplyForm from "../Replies/ReplyForm/ReplyForm";
+// import ReplyList from "../Replies/ReplyList/ReplyList";
+import useAuth from "../../hooks/useAuth";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 
 const Post = (props) => {
-
-    // The Date displays
-    // let currentDate = new Date();
-    // let cDay = currentDate.getDate();
-    // let cMonth = currentDate.getMonth() + 1;
-    // let cYear = currentDate.getFullYear();
-    // console.log("" + cDay + "/" + cMonth + "/" + cYear + "");
+        
 
     return (<div>
         <div className="form">{props.post.user.username}</div>

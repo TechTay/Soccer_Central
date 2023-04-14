@@ -1,13 +1,10 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
-from Locations.models import Location
+from django.db import models
 
-def upload_to(instance, filename):
-    return 'images/{filename}'.format(filename=filename)
 
 class User(AbstractUser):
-    favorites = models.ManyToManyField(Location)
-   
+    
+
     '''
     This is a custom version of the built in User class
     It contains all of the built in fields and functionality of the standard User

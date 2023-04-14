@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
+import ProfileImage from "../../components/ProfileImage/ProfileImage";
 import useAuth from "../../hooks/useAuth";
 import useCustomForm from "../../hooks/useCustomForm";
 
@@ -10,6 +10,7 @@ let initialValues = {
   address: "",
   date: "",
   time: "",
+  image_url: ""
 };
 
 const AddLocationPage = ({ fetchlocations }) => {
@@ -74,6 +75,16 @@ const AddLocationPage = ({ fetchlocations }) => {
             value={formData.time}
             onChange={handleInputChange}
           />
+        </label>
+        <label>
+          {/* Upload an Image of the area:{" "} */}
+          <ProfileImage />
+          {/* <input
+            type="upload"
+            name="image_url"
+            value={formData.image_url}
+            onChange={handleInputChange}
+          /> */}
         </label>
         <button type="submit">Add New Location</button>
       </form>

@@ -43,7 +43,7 @@ return (
         </Row>
         <Row>
             <Form.Group controlId="formFile" className="mb-3">
-                <Form.Label>My Image</Form.Label>
+                <Form.Label>Upload your Image</Form.Label>
                 <Form.Control
                     type="file"
                     name="image_url"
