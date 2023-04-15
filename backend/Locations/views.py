@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import LocationSerializer, UserSerializer
 from . models import Location, User
+from django.db import connection
 # Create your views here.
 
 
@@ -18,9 +19,18 @@ def location_list(request):
         serializer = LocationSerializer(locations, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     elif request.method == 'POST':
+
           serializer = LocationSerializer(data=request.data)
+
     if serializer.is_valid():
             serializer.save()
+            
+    #         with connection.cursor() as cursor:
+    #             cursor.execute(
+    #             f""" SELECT `authentication_user`.`id` FROM `authentication_user` INNER JOIN `Locations_location_user` ON (`authentication_user`.`id` = `Locations_location_user`.`user_id`) WHERE `Locations_location_user`.`location_id` = {location.id}; args=({location.id},); alias=default
+    # INSERT IGNORE INTO `Locations_location_user` (`location_id`, `user_id`) VALUES ({location.id}, {user.id}); args=({location.id}, {user.id}); alias=default
+    # SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'Locations' AND `django_content_type`.`model` = 'location') LIMIT 21; args=('Locations', 'location'); alias=default"""   
+    #             )  
             return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -51,7 +61,7 @@ def location_detail(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     elif request.method == 'GET':
-        locations = Location.objects.filter(user_id=request.user.id)
+        locations = Location.objects.filter(user__id=request.user.id)
         serializer = LocationSerializer(locations, many=True)
         return Response(serializer.data)
     
@@ -91,7 +101,7 @@ def user_locations(request, location_pk, user_pk):
          except:
               return Response({"message": "User not found!"}, status=status.HTTP_404_NOT_FOUND)
          
-         location.user.add(Location)
-         user.save()
-         serializer = UserSerializer(User)
+         location.user.add(user)
+         location.save()
+         serializer = LocationSerializer(location)
          return Response(serializer.data, status=status.HTTP_200_OK)

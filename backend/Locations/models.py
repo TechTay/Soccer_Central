@@ -17,3 +17,8 @@ class Location(models.Model):
 
     def __str__(self) -> str:
             return f"{self.title}"
+    
+class LocationHistory(models.Model):
+     user = models.ForeignKey(User, on_delete=models.CASCADE)
+     location = models.ForeignKey(Location, on_delete=models.CASCADE)
+     date_of_play = models.DateField()

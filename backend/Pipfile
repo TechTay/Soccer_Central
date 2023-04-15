@@ -13,6 +13,7 @@ tzdata = "*"
 mysqlclient = "*"
 django-ratings = "*"
 pillow = "*"
+django-debug-toolbar = "*"
 
 [dev-packages]
 autopep8 = "*"

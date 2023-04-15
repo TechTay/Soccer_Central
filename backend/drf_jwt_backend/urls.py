@@ -25,5 +25,6 @@ urlpatterns = [
     path('api/Locations/', include('Locations.urls')),
     path('api/images/', include('images.urls')),
     path('api/history/', include('history.urls')),
+    path('__debug__/', include('debug_toolbar.urls')),
     
 ]
