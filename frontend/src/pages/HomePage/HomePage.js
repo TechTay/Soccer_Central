@@ -9,7 +9,7 @@ import AddLocationPage from "../AddLocationPage/AddLocationPage";
 import CreatePostForm from "../../components/CreatePostForm/CreatePostForm";
 import PostList from "../../components/Postlist/Postlist";
 import ProfileImage from "../../components/ProfileImage/ProfileImage";
-import AddFavButtons from "../../components/JoinAddFavButtons/AddFavButton";
+
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
@@ -19,6 +19,7 @@ const HomePage = () => {
   const [locations, setLocations] = useState([]);
   const [posts, setPosts] = useState([]);
   const [data, setData] = useState([""])
+  const [userLocations, setUserLocations] = useState([""])
   
 
   const handleSubmit = async (e) => {
@@ -27,11 +28,27 @@ const HomePage = () => {
   let form_data = new FormData();
   form_data.append("image_url", data)
   }
+
+  const fetchUserLocations = async () => {
+    try {
+      let response = await axios.get(
+        "http://127.0.0.1:8000/api/Locations/locationdetails/",
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      setUserLocations(response.data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
   
   const fetchlocations = async () => {
     try {
       let response = await axios.get(
-        "http://127.0.0.1:8000/api/Locations/all/",
+        "http://127.0.0.1:8000/api/Locations/",
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -63,6 +80,7 @@ const HomePage = () => {
   useEffect(() => {
     fetchPost();
     fetchlocations();
+    fetchUserLocations();
   }, [token]);
 
   return (
@@ -99,6 +117,17 @@ const HomePage = () => {
               title="My Favorites"
             >
               <div className="form">Your favorite places to play!</div>
+              <div>
+      {userLocations.map(FavLocations => (
+        <p className="form"
+        style={{ fontSize: "15px", padding: 10 }} key={FavLocations.id}>
+          {FavLocations.title}
+          {FavLocations.address}
+          {FavLocations.time}
+          {FavLocations.date}
+          </p>
+      ))}
+    </div>
             </Tab>
 
             {/* Second tab begins */}

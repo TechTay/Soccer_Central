@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Location, User
+from .models import Location, User, LocationHistory
 
 
 
@@ -16,5 +16,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'Location']
         
-
+class HistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LocationHistory
+        fields = ['id', 'date of play', 'Location', 'user_id']
         

@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import LocationSerializer, UserSerializer
+from .serializers import LocationSerializer, UserSerializer, HistorySerializer
 from . models import Location, User
 from django.db import connection
 # Create your views here.
@@ -102,6 +102,23 @@ def user_locations(request, location_pk, user_pk):
               return Response({"message": "User not found!"}, status=status.HTTP_404_NOT_FOUND)
          
          location.user.add(user)
+         location.save()
+         serializer = LocationSerializer(location)
+         return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def locations_history(request, location_pk, history_pk):
+         try:
+              location = Location.objects.get(pk=location_pk)
+         except:
+              return Response({"message": "Location not found!"}, status=status.HTTP_404_NOT_FOUND)
+         try:
+              history= HistorySerializer.objects.get(pk=history_pk)
+         except:
+              return Response({"message": "User not found!"}, status=status.HTTP_404_NOT_FOUND)
+         
+         location.history.add(history)
          location.save()
          serializer = LocationSerializer(location)
          return Response(serializer.data, status=status.HTTP_200_OK)
