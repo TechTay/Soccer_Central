@@ -10,14 +10,19 @@ class LocationSerializer(serializers.ModelSerializer):
         depth = 1
 
 class UserSerializer(serializers.ModelSerializer):
-    Location = LocationSerializer(many=True, read_only=True)
+    location = LocationSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
-        fields = ['id', 'Location']
+        fields = ['id', 'location']
         
 class HistorySerializer(serializers.ModelSerializer):
+    location = LocationSerializer(many=True, read_only=True)
+
     class Meta:
         model = LocationHistory
-        fields = ['id', 'date of play', 'Location', 'user_id']
+        fields = ['id', 'date_of_play','location','location_id','user_id']
+        
+
+    location_id = serializers.IntegerField(write_only=True)
         

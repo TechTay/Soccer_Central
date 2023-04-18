@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'Replies',
     'Locations',
     'images',
-    'history',
     'debug_toolbar'
 ]
 

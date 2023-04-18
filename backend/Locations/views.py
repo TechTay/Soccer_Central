@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import LocationSerializer, UserSerializer, HistorySerializer
-from . models import Location, User
+from . models import Location, User, LocationHistory
 from django.db import connection
 # Create your views here.
 
@@ -24,20 +24,14 @@ def location_list(request):
 
     if serializer.is_valid():
             serializer.save()
-            
-    #         with connection.cursor() as cursor:
-    #             cursor.execute(
-    #             f""" SELECT `authentication_user`.`id` FROM `authentication_user` INNER JOIN `Locations_location_user` ON (`authentication_user`.`id` = `Locations_location_user`.`user_id`) WHERE `Locations_location_user`.`location_id` = {location.id}; args=({location.id},); alias=default
-    # INSERT IGNORE INTO `Locations_location_user` (`location_id`, `user_id`) VALUES ({location.id}, {user.id}); args=({location.id}, {user.id}); alias=default
-    # SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'Locations' AND `django_content_type`.`model` = 'location') LIMIT 21; args=('Locations', 'location'); alias=default"""   
-    #             )  
             return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET','POST'])
 @permission_classes([IsAuthenticated])
 def user_list(request):
-
+    print(
+        'User ', f"{request.user.id} {request.user.email} {request.user.username}")
     if request.method == 'GET':
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
@@ -46,6 +40,21 @@ def user_list(request):
           serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
             serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET','POST'])
+@permission_classes([IsAuthenticated])
+def history_list(request):
+
+    if request.method == 'GET':
+        history = LocationHistory.objects.all()
+        serializer = HistorySerializer(history, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    elif request.method == 'POST':
+          serializer = HistorySerializer(data=request.data)
+    if serializer.is_valid():
+            serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -89,6 +98,26 @@ def user_detail(request):
             User.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
     
+@api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])    
+def history_detail(request):
+    
+    if request.method == 'PUT':
+        serializer = HistorySerializer(Location,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'GET':
+        Lhistory = LocationHistory.objects.filter(user_id=request.user.id)
+        serializer = HistorySerializer(Lhistory, many=True)
+        return Response(serializer.data)
+    
+    elif request.method == 'DELETE':
+            User.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+    
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 def user_locations(request, location_pk, user_pk):
@@ -116,7 +145,7 @@ def locations_history(request, location_pk, history_pk):
          try:
               history= HistorySerializer.objects.get(pk=history_pk)
          except:
-              return Response({"message": "User not found!"}, status=status.HTTP_404_NOT_FOUND)
+              return Response({"message": "History not found!"}, status=status.HTTP_404_NOT_FOUND)
          
          location.history.add(history)
          location.save()
