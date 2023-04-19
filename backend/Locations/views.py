@@ -52,11 +52,14 @@ def history_list(request):
         serializer = HistorySerializer(history, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     elif request.method == 'POST':
-          serializer = HistorySerializer(data=request.data)
-    if serializer.is_valid():
+        location_id = request.data["location_id"]
+        location = Location.objects.get(pk=location_id)
+        request.data["location"] = location_id
+        serializer = HistorySerializer(data=request.data)
+        if serializer.is_valid():
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])

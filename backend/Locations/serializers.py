@@ -17,12 +17,13 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'location']
         
 class HistorySerializer(serializers.ModelSerializer):
-    location = LocationSerializer(many=True, read_only=True)
+    # location = LocationSerializer(many=True, read_only=True)
 
     class Meta:
         model = LocationHistory
         fields = ['id', 'date_of_play','location','location_id','user_id']
+        depth=1
+    location_id = serializers.IntegerField(write_only=True)
         
 
-    location_id = serializers.IntegerField(write_only=True)
         
