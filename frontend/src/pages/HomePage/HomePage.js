@@ -9,7 +9,8 @@ import AddLocationPage from "../AddLocationPage/AddLocationPage";
 import CreatePostForm from "../../components/CreatePostForm/CreatePostForm";
 import PostList from "../../components/Postlist/Postlist";
 import ProfileImage from "../../components/ProfileImage/ProfileImage";
-
+import JoinButton from "../../components/JoinAddFavButtons/JoinButton";
+import AddFavButton from "../../components/JoinAddFavButtons/AddFavButton";
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
@@ -20,6 +21,8 @@ const HomePage = () => {
   const [posts, setPosts] = useState([]);
   const [data, setData] = useState([""])
   const [userLocations, setUserLocations] = useState([""])
+  const [userLocationHistory, setUserLocationHistory] = useState([""])
+  
   
 
   const handleSubmit = async (e) => {
@@ -28,6 +31,24 @@ const HomePage = () => {
   let form_data = new FormData();
   form_data.append("image_url", data)
   }
+
+  const fetchLocationHistory = async () => {
+    try {
+      let response = await axios.get(
+        "http://127.0.0.1:8000/api/Locations/historydetails/",
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      
+      setUserLocationHistory(response.data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
 
   const fetchUserLocations = async () => {
     try {
@@ -81,6 +102,7 @@ const HomePage = () => {
     fetchPost();
     fetchlocations();
     fetchUserLocations();
+    fetchLocationHistory();
   }, [token]);
 
   return (
@@ -136,34 +158,53 @@ const HomePage = () => {
               eventKey="fourth"
               title="Available Games"
             >
-              <div className="form">A list of all available pick-up games.</div>
+              <div className="form" style={{ fontSize: "20px", padding: 5 }} >A list of all available pick-up games.</div>
 
-              <p className="form" style={{ fontSize: "15px" }}>
-                Click the bubble to add to your "Favorites" list
-              </p>
               {locations &&
                 locations.map((locations) => (
                   <p
                     className="form"
-                    style={{ fontSize: "15px", padding: 10 }}
+                    style={{ fontSize: "17px", padding: 5 }}
                     key={locations.id}
-                  > 
-                    {/* <AddFavButtons /> */}
-                    {locations.title}
-                    {locations.address}
-                    {locations.time}
-                    {locations.date}
+                  >{ <JoinButton/>} {<AddFavButton />}
+                   
+                  <ul>{locations.title} {locations.address} {locations.time} {locations.date}</ul>
                   </p>
                 ))}
             </Tab>
-
+            
             {/* third tab begins  */}
             <Tab
               style={{ fontSize: "15px" }}
               eventKey="third"
               title="My History"
             >
+              {/* conditional rendering done here. LOOK IT UP */}
               <div className="form">A list of your recent activities.</div>
+              {userLocationHistory.map((userHistory) => {
+                  if (userLocationHistory[0].location) {
+                    return (
+                      <p
+                    className="form"
+                    style={{ fontSize: "15px", padding: 5 }}
+                    key={userHistory.id}
+                  > 
+                    <ul>{userHistory.date_of_play} 
+                    {userHistory.location.address}
+                    {userHistory.location.title}
+                    {userHistory.location.date}
+                    {userHistory.location.time}
+                    {userHistory.location.image_url}</ul>
+                  
+                  </p>
+                  )
+                }
+                else {
+                  <p>Loading</p>
+                }
+              })}
+                    
+
             </Tab>
 
             {/* fourth tab begins  */}

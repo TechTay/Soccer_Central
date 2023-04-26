@@ -1,26 +1,12 @@
-import React from 'react';
-import Button from 'react-bootstrap/Button';
+import React from "react";
+import { Link} from "react-router-dom";
 
+const AddFavButton = () => {
 
-const AddFavButtons = async () => {
-
-    
-    // const [addToFavs, setAddToFavs] = useState()
-
-    function handleJoinClick() {
-
-        console.log("You have Joined the Game!")
-    }
-    
 
     return (
-        <form>
-            <button class="btn btn-primary" onClick={handleJoinClick}>Join!</button>
-        </form>
-        
-    )
-
-
+        <Link to="/JoinGame" className="btn btn-primary">Add to Favorites</Link>
+    );
+  
 }
-
-export default AddFavButtons
+export default AddFavButton;

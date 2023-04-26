@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
@@ -28,7 +28,7 @@ def location_list(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET','POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def user_list(request):
     print(
         'User ', f"{request.user.id} {request.user.email} {request.user.username}")
@@ -44,7 +44,7 @@ def user_list(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET','POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def history_list(request):
 
     if request.method == 'GET':
@@ -60,6 +60,17 @@ def history_list(request):
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['GET','POST'])
+@permission_classes([AllowAny])
+def join_game_details(request, location_pk):
+
+    join_game = get_object_or_404(Location, pk=location_pk)
+    if request.method == 'GET':
+        
+        
+        serializer = LocationSerializer(join_game);
+        return Response(serializer.data)
 
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
@@ -146,7 +157,7 @@ def locations_history(request, location_pk, history_pk):
          except:
               return Response({"message": "Location not found!"}, status=status.HTTP_404_NOT_FOUND)
          try:
-              history= HistorySerializer.objects.get(pk=history_pk)
+              history= LocationHistory.objects.get(pk=history_pk)
          except:
               return Response({"message": "History not found!"}, status=status.HTTP_404_NOT_FOUND)
          

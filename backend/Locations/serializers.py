@@ -22,7 +22,7 @@ class HistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = LocationHistory
         fields = ['id', 'date_of_play','location','location_id','user_id']
-        depth=1
+        depth= 1
     location_id = serializers.IntegerField(write_only=True)
         
 

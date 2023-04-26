@@ -12,5 +12,6 @@ urlpatterns = [
     path('historydetails/', views.history_detail),
     path('<int:location_pk>/history/<int:history_pk>/', views.locations_history), 
     path('<int:location_pk>/users/<int:user_pk>/', views.user_locations),
+    path('<int:location_pk>/', views.join_game_details),
     # http://127.0.0.1:8000/api/Locations/1/users/2/
 ]

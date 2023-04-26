@@ -1,13 +1,13 @@
 // General Imports
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import React, { useState } from "react";
 
 // Pages Imports
 import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
-import AddLocationPage from "./pages/AddLocationPage/AddLocationPage";
+import JoinedPage from "./pages/JoinedPage/JoinedPage";
+import JoinGameDetailsPage from "./pages/JoinGameDetailsPage/JoinGameDetailsPage";
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
@@ -30,7 +30,8 @@ function App() {
         />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
-        {/* <Route path="/addlocation" element={<AddLocationPage />} /> */}
+        <Route path="/JoinGame" element={<JoinedPage />} />
+        <Route path="/details/:JoinGame" element={<JoinGameDetailsPage />} />
       </Routes>
       <Footer />
     </div>
