@@ -7,8 +7,7 @@ const JoinGameDetailsPage = () => {
   const [user, token] = useAuth();
   const { JoinGame } = useParams();
   const [ location, setLocation ] = useState([]);
-  console.log(location);
-  
+  console.log(location)
   
   useEffect(() => {
     const fetchGame = async () => {
@@ -30,17 +29,28 @@ const JoinGameDetailsPage = () => {
     fetchGame();
   }, [JoinGame]);
   return (
+    
     <form>
     <div class="alert alert-success">
       <strong>Success!</strong> You have successfully joined session {JoinGame}!
-    </div>
-    
+      {location.users.map((users) => {
+        return (
+          <div key={users.id}>
+            <p>{users.user}</p>
+            </div>
+        )
+      })}
+      
+      {console.log(location.user)};
+      
+        <ul>{location.user}</ul>
         <ul>{user.username}</ul>
         <ul>{location.title}</ul>
         <ul>{location.address}</ul>
         <ul>{location.date}</ul>
         <ul>{location.time}</ul>
-    
+        {/* for loop(user in location.users) */}
+    </div>
     </form>
     
   );

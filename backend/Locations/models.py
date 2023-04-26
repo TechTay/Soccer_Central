@@ -13,6 +13,7 @@ class Location(models.Model):
     time = models.TimeField(auto_now=False, auto_now_add=False)
     image_url = models.ImageField(upload_to=upload_to, blank=True, null=True)
     user = models.ManyToManyField(User)
+    # delete user model, creating a userLocation app that holds user and location as foreignKey. Boolean=isFavorite(check syntax)
     # rating = RatingField(range=5) # 5 possible rating values, 1-5
 
     def __str__(self) -> str:

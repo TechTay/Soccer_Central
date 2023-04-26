@@ -5,7 +5,8 @@ const AddFavButton = () => {
 
 
     return (
-        <Link to="/JoinGame" className="btn btn-primary">Add to Favorites</Link>
+        <p></p>
+        // <Link to="/JoinGame" className="btn btn-primary">Add to Favorites</Link>
     );
   
 }
