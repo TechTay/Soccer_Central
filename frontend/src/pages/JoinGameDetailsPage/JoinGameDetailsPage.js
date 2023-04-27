@@ -33,23 +33,20 @@ const JoinGameDetailsPage = () => {
     <form>
     <div class="alert alert-success">
       <strong>Success!</strong> You have successfully joined session {JoinGame}!
-      {location.users.map((users) => {
+      {location.user?.map((users) => {
         return (
-          <div key={users.id}>
-            <p>{users.user}</p>
+          <div style={{ fontSize: "15px", padding: 10 }} key={users.id}>
+            <h2>Players Attendance:</h2>
+            <p>{users.username}</p>
+            <p>{user.username}</p>
             </div>
         )
       })}
-      
-      {console.log(location.user)};
-      
-        <ul>{location.user}</ul>
-        <ul>{user.username}</ul>
+        <h2>Location:</h2>
         <ul>{location.title}</ul>
         <ul>{location.address}</ul>
         <ul>{location.date}</ul>
         <ul>{location.time}</ul>
-        {/* for loop(user in location.users) */}
     </div>
     </form>
     

@@ -32,8 +32,7 @@ const JoinedPage = () => {
       {locationPk && locationPk.map(location => {
           return (
             <Link className="form" to={`/details/${location.id}`} key={location.id}>
-                <p>{location.title}</p>
-                <p>Session start time: {location.time}</p>
+                <p>{location.title}  {location.time}  {location.date}</p>
             </Link>
           );
         })}
