@@ -44,7 +44,7 @@ button:hover {
   align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex;
   gap: 1rem;
 }
 
@@ -56,6 +56,10 @@ button:hover {
   padding: 3px 7px;
   font-size: 17px;
 }
+
+/* .form div {
+  
+} */
 
 body {
   /* background-image: url("giero-saaski-HPus1oCcOdk-unsplash.jpg"); */

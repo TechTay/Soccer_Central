@@ -55,7 +55,7 @@ return (
             </Form.Group>
         </Row>
        
-        <Button
+        <Button className="form"
             variant="primary"
             type="submit"
             onClick={(e) => doSubmit(e)}>

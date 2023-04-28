@@ -167,7 +167,8 @@ const HomePage = () => {
                     style={{ fontSize: "17px", padding: 5 }}
                     key={locations.id}
                   >{ <JoinButton/>} {<AddFavButton />}
-                   
+                   <img src={`http://127.0.0.1:8000${locations.image_url}`} alt="location's image"/>
+                   {console.log(locations.image_url)}
                   <ul>{locations.title} {locations.address} {locations.time} {locations.date}</ul>
                   </p>
                 ))}

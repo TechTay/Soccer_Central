@@ -7,6 +7,11 @@ const ReplyForm = ({commentId, getReplies}) => {
   const [user, token] = useAuth();
   const [text, setText] = useState([]) 
 
+
+  function refreshPage() {
+    window.location.reload(true);
+  }
+
   async function postReply(e) {
     e.preventDefault()
     debugger
@@ -30,10 +35,10 @@ const ReplyForm = ({commentId, getReplies}) => {
   }
 
   return (
-    <div className="container">
-      <h5>{user.username}</h5>
+    <div class="position-absolute top-80 start-50 translate-middle">
+      
       <form className="form" onSubmit={(e) => postReply(e)}>
-        <label style={{ padding: "1em" }}>
+        <label style={{ marginTop: 40 }} className="form">
           Reply: {""}
           <input
             name="text"
@@ -42,7 +47,7 @@ const ReplyForm = ({commentId, getReplies}) => {
             onChange={(e) => setText(e.target.value)}
           />
         </label>
-        <input type="submit" value="Submit" />
+        <input onClick={refreshPage} style={{ marginBottom: 30 }} className="form" class="btn btn-primary btn-sm" type="submit" value="Submit" />
       </form>
     </div>
   );

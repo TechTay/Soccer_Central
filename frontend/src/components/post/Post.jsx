@@ -11,7 +11,7 @@ const Post = ({post}) => {
   const [replies, setReplies] = useState([{}]);
 
   const getReplies = async () => {
-    // debugger
+
     let response = await axios.get(
       `http://127.0.0.1:8000/api/Replies/?id=${post.id}`,
       {
@@ -27,9 +27,9 @@ const Post = ({post}) => {
   console.log(post)
   return (
     <div>
-      {post.user.username}
-    <div className="text">{post?.text}</div>
-    <ReplyForm commentId={post?.id} getReplies={getReplies}/>
+      {post.user.username} posted:
+    <div class="form" style={{ marginleft: 60}} className="text">{post?.text}</div>
+    <ReplyForm style={{ marginRight: 160}} commentId={post?.id} getReplies={getReplies}/>
     <ReplyList replies={replies} />
   </div>
   );

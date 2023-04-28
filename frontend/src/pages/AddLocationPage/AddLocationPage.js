@@ -16,6 +16,11 @@ let initialValues = {
 const AddLocationPage = ({ fetchlocations }) => {
   const [user, token] = useAuth();
 
+
+  function refreshPage() {
+    window.location.reload(true);
+  }
+
   const [formData, handleInputChange, handleSubmit, reset] = useCustomForm(
     initialValues,
     postNewLocation
@@ -86,7 +91,7 @@ const AddLocationPage = ({ fetchlocations }) => {
             onChange={handleInputChange}
           /> */}
         </label>
-        <button type="submit">Add New Location</button>
+        <button onClick={refreshPage} type="submit">Add New Location</button>
       </form>
     </div>
   );

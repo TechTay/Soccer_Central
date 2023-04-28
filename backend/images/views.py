@@ -1,12 +1,11 @@
-from django.shortcuts import render
-
-# Create your views here.
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
 from .models import Image
 from .serializers import ImageSerializer
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework import permissions, viewsets
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
@@ -15,6 +14,16 @@ def get_all_images(request):
     serializer = ImageSerializer(images, many=True)
     return Response(serializer.data)
 
+@api_view(['GET', 'POST', 'DELETE'])
+@permission_classes([IsAuthenticated])
+class ViewImageSet(viewsets.ModelViewSet):
+     imageset = Image.objects.order_by('-id')
+     serializer_class = ImageSerializer
+     parser_classes = (MultiPartParser, FormParser)
+     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+     def perform_create(self, serializer):
+        serializer.save(creator=self.request.user)
 
 @api_view(['GET', 'POST', 'DELETE'])
 @permission_classes([IsAuthenticated])

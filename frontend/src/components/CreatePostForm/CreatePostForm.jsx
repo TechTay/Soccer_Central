@@ -20,6 +20,10 @@ const CreatePostForm = ({ fetchPost }) => {
     postNewComment
   );
 
+  function refreshPage() {
+    window.location.reload(true);
+  }
+
   async function postNewComment(formdata) {
     try {
       let response = await axios
@@ -36,17 +40,18 @@ const CreatePostForm = ({ fetchPost }) => {
   }
 
   return (
-    <div>
+    <div className="form" >
       <form
-        style={{ marginBlock: 10 }}
-        className="container"
+        style={{ marginBlock: 20, marginTop: 10}}
+        className="form"
         onSubmit={handleSubmit}
       >
         <br></br>
-        <label>
-          Message{" "}
+        <label className="form">
+          Share your thoughts with the Soccer Community!{" "}
           <input
-            style={{ marginRight: 60, padding: 20 }}
+            placeholder="What's on your mind?"
+            style={{ marginRight: 20, padding: 15, }}
             className="form"
             type="text"
             name="text"
@@ -55,7 +60,8 @@ const CreatePostForm = ({ fetchPost }) => {
           />
         </label>
         <button
-          style={{ marginLeft: 20, marginTop: 5 }}
+          onClick={refreshPage}
+          style={{ marginLeft: 5, marginBottom: 10 }}
           class="btn btn-primary btn-sm"
           type="submit"
         >
