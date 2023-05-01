@@ -14,10 +14,10 @@ class Location(models.Model):
     image_url = models.ImageField(upload_to=upload_to, blank=True, null=True)
     user = models.ManyToManyField(User)
     # delete user model, creating a userLocation app that holds user and location as foreignKey. Boolean=isFavorite(check syntax)
-    # rating = RatingField(range=5) # 5 possible rating values, 1-5
+    rating = models.PositiveIntegerField(choices=((1,'1 star'), (2,'2 stars'), (3,'3 stars'), (4,'4 stars'), (5,'5 Stars')))
 
     def __str__(self) -> str:
-            return f"{self.title}"
+            return f"{self.title} {self.rating}-star rating for {self.title}"
     
 class LocationHistory(models.Model):
      user = models.ForeignKey(User, on_delete=models.CASCADE)

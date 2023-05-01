@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import ProfileImage from "../../components/ProfileImage/ProfileImage";
 import useAuth from "../../hooks/useAuth";
 import useCustomForm from "../../hooks/useCustomForm";
+import { Alert } from "bootstrap";
 
 let initialValues = {
   title: "",
@@ -16,9 +17,20 @@ let initialValues = {
 const AddLocationPage = ({ fetchlocations }) => {
   const [user, token] = useAuth();
 
+  const alert = () => {
+    <div class="alert alert-success" role="alert">
+      You have successfully added a new location!
+    </div>
+  }
 
-  function refreshPage() {
+  const refreshPage = () => {
     window.location.reload(true);
+
+  }
+
+  const clickHandler = event => {
+    // refreshPage();
+    alert();
   }
 
   const [formData, handleInputChange, handleSubmit, reset] = useCustomForm(
@@ -27,6 +39,7 @@ const AddLocationPage = ({ fetchlocations }) => {
   );
 
   async function postNewLocation(formdata) {
+    debugger
     try {
       let response = await axios
         .post("http://127.0.0.1:8000/api/Locations/", formdata, {
@@ -34,6 +47,7 @@ const AddLocationPage = ({ fetchlocations }) => {
             Authorization: "Bearer " + token,
           },
         })
+        console.log(response.data)
         .then(() => fetchlocations())
         .then(() => reset());
     } catch (error) {
@@ -91,7 +105,7 @@ const AddLocationPage = ({ fetchlocations }) => {
             onChange={handleInputChange}
           /> */}
         </label>
-        <button onClick={refreshPage} type="submit">Add New Location</button>
+        <button onClick={clickHandler} type="submit">Add New Location</button>
       </form>
     </div>
   );
