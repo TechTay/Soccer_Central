@@ -27,6 +27,7 @@ const doSubmit = async (e) => {
     let response = await axios
       .post("http://127.0.0.1:8000/api/images/", form_data, {
         headers: {
+          "Content-Type": "multipart/form-data",
           Authorization: "Bearer " + token,
         },
       })
@@ -42,7 +43,7 @@ return (
     
         </Row>
         <Row>
-            <Form.Group controlId="formFile" className="mb-3">
+            <Form.Group style={{}} controlId="formFile" className="mb-3 ">
                 <Form.Label>Upload your Image</Form.Label>
                 <Form.Control
                     type="file"

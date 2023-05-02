@@ -46,6 +46,8 @@ button:hover {
   flex-direction: column;
   justify-content: flex;
   gap: 1rem;
+  font-size: large;
+  color: rgb(34, 5, 194);
 }
 
 .form input {
@@ -56,12 +58,14 @@ button:hover {
   padding: 3px 7px;
   font-size: 17px;
 }
-
-/* .form div {
-  
-} */
+@media (min-width: 768px) {
+ .image {
+ 
+  height: min-content;
+ }
+}
 
 body {
-  /* background-image: url("giero-saaski-HPus1oCcOdk-unsplash.jpg"); */
-  background-size: cover;
+  background-image: url("angelo-carniato-eh_ijhl1oNw-unsplash.jpg");
+  background-size: 100%;
 }

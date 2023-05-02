@@ -36,17 +36,17 @@ const JoinGameDetailsPage = () => {
       {location.user?.map((users) => {
         return (
           <div style={{ fontSize: "15px", padding: 10 }} key={users.id}>
-            <h2>Players Attendance:</h2>
+            <h2>Players in Attendance:</h2>
             <p>{users.username}</p>
             <p>{user.username}</p>
             </div>
         )
       })}
-        <h2>Location:</h2>
-        <ul>{location.title}</ul>
-        <ul>{location.address}</ul>
-        <ul>{location.date}</ul>
-        <ul>{location.time}</ul>
+        <h2>Location Information:</h2>
+        <ul>Name: {location.title}</ul>
+        <ul>Address: {location.address}</ul>
+        <ul>Date of Play: {location.date}</ul>
+        <ul>Start Time: {location.time}</ul>
     </div>
     </form>
     

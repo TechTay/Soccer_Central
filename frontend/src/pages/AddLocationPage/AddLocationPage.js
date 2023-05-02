@@ -1,10 +1,9 @@
 import axios from "axios";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import ProfileImage from "../../components/ProfileImage/ProfileImage";
 import useAuth from "../../hooks/useAuth";
 import useCustomForm from "../../hooks/useCustomForm";
-import { Alert } from "bootstrap";
+
 
 let initialValues = {
   title: "",
@@ -44,6 +43,7 @@ const AddLocationPage = ({ fetchlocations }) => {
       let response = await axios
         .post("http://127.0.0.1:8000/api/Locations/", formdata, {
           headers: {
+            "Content-Type": `multipart/form-data; boundary=${formdata._boundary}`,
             Authorization: "Bearer " + token,
           },
         })
@@ -96,14 +96,8 @@ const AddLocationPage = ({ fetchlocations }) => {
           />
         </label>
         <label>
-          {/* Upload an Image of the area:{" "} */}
           <ProfileImage />
-          {/* <input
-            type="upload"
-            name="image_url"
-            value={formData.image_url}
-            onChange={handleInputChange}
-          /> */}
+         
         </label>
         <button onClick={clickHandler} type="submit">Add New Location</button>
       </form>

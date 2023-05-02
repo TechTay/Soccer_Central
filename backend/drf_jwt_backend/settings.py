@@ -24,6 +24,10 @@ MEDIA_URL = '/media/'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000', 
+    'http://localhost:8000'
+]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
