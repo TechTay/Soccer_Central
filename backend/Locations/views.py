@@ -61,6 +61,28 @@ def history_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+
+@api_view(['GET','PUT','PATCH','DELETE'])
+@permission_classes([IsAuthenticated])
+def location_image(request, pk):
+     image = get_object_or_404(Location, pk=pk)
+     if request.method == "GET":
+          serializer = LocationSerializer(image)
+     elif request.method == 'PUT':
+        serializer = LocationSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+     elif request.method == 'PATCH':
+          serializer = LocationSerializer(image, data=request.data, partial=True)
+          serializer.is_valid(raise_exception=True)
+          serializer.save()
+          return Response(status=status.HTTP_201_CREATED)
+     elif request.method == 'DELETE':
+          image.delete()
+          return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
 @api_view(['GET','POST'])
 @permission_classes([AllowAny])
 def join_game_details(request, location_pk):

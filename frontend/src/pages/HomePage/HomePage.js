@@ -11,6 +11,7 @@ import PostList from "../../components/Postlist/Postlist";
 import ProfileImage from "../../components/ProfileImage/ProfileImage";
 import JoinButton from "../../components/JoinAddFavButtons/JoinButton";
 import AddFavButton from "../../components/JoinAddFavButtons/AddFavButton";
+import { useParams } from "react-router-dom";
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
@@ -22,12 +23,46 @@ const HomePage = () => {
   const [data, setData] = useState([""]);
   const [userLocations, setUserLocations] = useState([""]);
   const [userLocationHistory, setUserLocationHistory] = useState([""]);
-
+  const [userImage, setUserImage] = useState([]);
+  const { image } = useParams();
+  const [locationImage, setLocationImage] = useState([]);
+  console.log(locationImage);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     let form_data = new FormData();
     form_data.append("image_url", data);
+  };
+
+  const patchlocationImage = async () => {
+    try {
+      let response = await axios.patch(
+        `http://127.0.0.1:8000/api/images/${image}/`,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: "Bearer " + token
+          },
+        }
+      );
+      setLocationImage(response.data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
+  const fetchProfileImage = async () => {
+    try {
+      let response = await axios.get("http://127.0.0.1:8000/api/images/all/", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+
+      setUserImage(response.data);
+    } catch (error) {
+      console.log(error.response);
+    }
   };
 
   const fetchLocationHistory = async () => {
@@ -97,14 +132,29 @@ const HomePage = () => {
     fetchlocations();
     fetchUserLocations();
     fetchLocationHistory();
+    fetchProfileImage();
+    patchlocationImage();
   }, [token]);
 
   return (
     <div className="form">
-      <h1>{user.username}'s Dashboard</h1>
-
       <ProfileImage />
-      
+      <div>
+        {userImage.map((userImage) => (
+          <p
+            className="form"
+            style={{ fontSize: "15px", padding: 10 }}
+            key={userImage.id}
+          >
+            <img
+              class="rounded float-start"
+              src={`http://127.0.0.1:8000${userImage.image_url}`}
+              alt="location's image"
+            />
+          </p>
+        ))}
+      </div>
+      <h1>{user.username}'s Dashboard</h1>
 
       <div
         className="form"
@@ -131,11 +181,16 @@ const HomePage = () => {
                   key={FavLocations.id}
                 >
                   {FavLocations.title}
-                  <img class="rounded float-start"
+                  <img
+                    class="rounded float-start"
                     src={`http://127.0.0.1:8000${FavLocations.image_url}`}
-                    alt="location's image" />
-                 <ul> {FavLocations.address} {FavLocations.time} {FavLocations.date}</ul>
-                  
+                    alt="location's image"
+                  />
+                  <ul>
+                    {" "}
+                    {FavLocations.address} {FavLocations.time}{" "}
+                    {FavLocations.date}
+                  </ul>
                 </p>
               ))}
             </div>
@@ -155,20 +210,30 @@ const HomePage = () => {
               locations.map((locations) => (
                 <p
                   className="form"
-                  style={{ fontSize: "17px", padding: 5}}
+                  style={{ fontSize: "17px", padding: 5 }}
                   key={locations.id}
                 >
                   {<JoinButton />} {<AddFavButton />}
                   <ul>{locations.title} </ul>
-                  <img class="rounded float-start"
+                  <img
+                    class="rounded float-start"
                     src={`http://127.0.0.1:8000${locations.image_url}`}
                     alt="location's image"
                   />
-                  
                   <ul>
-                    {locations.address} {locations.time}{" "}
-                    {locations.date}
+                    {locations.address} {locations.time} {locations.date}
                   </ul>
+                </p>
+              ))}
+
+            {locationImage &&
+              locationImage.map((locationImage) => (
+                <p
+                  className="form"
+                  style={{ fontSize: "17px", padding: 5 }}
+                  key={locationImage.id}
+                >
+                  <ul>{locationImage.image_url} </ul>
                 </p>
               ))}
           </Tab>
@@ -191,11 +256,11 @@ const HomePage = () => {
                       {userHistory.location.title}
                       {userHistory.location.date}
                       {userHistory.location.time}
-                      
                     </ul>
-                    <img class="rounded float-start"
-                        src={`http://127.0.0.1:8000${userHistory.location.image_url}`}
-                      />
+                    <img
+                      class="rounded float-start"
+                      src={`http://127.0.0.1:8000${userHistory.location.image_url}`}
+                    />
                   </p>
                 );
               } else {

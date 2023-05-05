@@ -3,11 +3,13 @@ import React, { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { Link, useParams } from "react-router-dom";
 
+
+
 const JoinGameDetailsPage = () => {
   const [user, token] = useAuth();
   const { JoinGame } = useParams();
   const [ location, setLocation ] = useState([]);
-  console.log(location)
+  
   
   useEffect(() => {
     const fetchGame = async () => {
@@ -39,14 +41,19 @@ const JoinGameDetailsPage = () => {
             <h2>Players in Attendance:</h2>
             <p>{users.username}</p>
             <p>{user.username}</p>
+            
             </div>
         )
       })}
         <h2>Location Information:</h2>
         <ul>Name: {location.title}</ul>
-        <ul>Address: {location.address}</ul>
+        <ul>Address: {location.address}</ul> 
         <ul>Date of Play: {location.date}</ul>
         <ul>Start Time: {location.time}</ul>
+        <ul><img  
+              src={`http://127.0.0.1:8000${location.image_url}`}
+              alt="location's image"
+            /></ul>
     </div>
     </form>
     

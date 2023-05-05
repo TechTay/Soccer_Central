@@ -6,6 +6,7 @@ from .models import Image
 from .serializers import ImageSerializer
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import permissions, viewsets
+from django.shortcuts import get_object_or_404
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
@@ -14,16 +15,28 @@ def get_all_images(request):
     serializer = ImageSerializer(images, many=True)
     return Response(serializer.data)
 
-@api_view(['GET', 'POST', 'DELETE'])
+@api_view(['GET','PUT','PATCH','DELETE'])
 @permission_classes([IsAuthenticated])
-class ViewImageSet(viewsets.ModelViewSet):
-     imageset = Image.objects.order_by('-id')
-     serializer_class = ImageSerializer
-     parser_classes = (MultiPartParser, FormParser)
-     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+def add_image(request, pk):
+     image = get_object_or_404(Image, pk=pk)
+     if request.method == "GET":
+          serializer = ImageSerializer(image)
+     elif request.method == 'PUT':
+        serializer = ImageSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+     elif request.method == 'PATCH':
+          serializer = ImageSerializer(image, data=request.data, partial=True)
+          serializer.is_valid(raise_exception=True)
+          serializer.save()
+          return Response(status=status.HTTP_201_CREATED)
+     elif request.method == 'DELETE':
+          image.delete()
+          return Response(status=status.HTTP_204_NO_CONTENT)
+     
 
-     def perform_create(self, serializer):
-        serializer.save(creator=self.request.user)
+    
 
 @api_view(['GET', 'POST', 'DELETE'])
 @permission_classes([IsAuthenticated])

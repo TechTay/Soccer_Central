@@ -58,14 +58,9 @@ button:hover {
   padding: 3px 7px;
   font-size: 17px;
 }
-@media (min-width: 768px) {
- .image {
- 
-  height: min-content;
- }
-}
 
 body {
   background-image: url("angelo-carniato-eh_ijhl1oNw-unsplash.jpg");
   background-size: 100%;
+  height: auto;
 }

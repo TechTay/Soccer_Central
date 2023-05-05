@@ -5,5 +5,5 @@ from django.urls import path
 urlpatterns = [
     path('all/', views.get_all_images),
     path('', views.user_images),
-    path('', views.ViewImageSet),
+    path('<int:pk>/', views.add_image),
 ]

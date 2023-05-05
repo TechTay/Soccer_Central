@@ -10,16 +10,28 @@ let initialValues = {
   address: "",
   date: "",
   time: "",
-  image_url: ""
+  // image_url: ""
 };
 
 const AddLocationPage = ({ fetchlocations }) => {
   const [user, token] = useAuth();
 
   const alert = () => {
-    <div class="alert alert-success" role="alert">
-      You have successfully added a new location!
-    </div>
+    // <div class="alert alert-success">
+    //   You have successfully added a new location!
+    // </div>
+
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+  <div class="toast-header">
+    <img src="..." class="rounded me-2" alt="..."/>
+    <strong class="me-auto">Notification</strong>
+    <small>11 mins ago</small>
+    {/* <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button> */}
+  </div>
+  <div class="toast-body">
+  You have successfully added a new location!
+  </div>
+</div>
   }
 
   const refreshPage = () => {
@@ -28,7 +40,7 @@ const AddLocationPage = ({ fetchlocations }) => {
   }
 
   const clickHandler = event => {
-    // refreshPage();
+    refreshPage();
     alert();
   }
 
@@ -43,7 +55,7 @@ const AddLocationPage = ({ fetchlocations }) => {
       let response = await axios
         .post("http://127.0.0.1:8000/api/Locations/", formdata, {
           headers: {
-            "Content-Type": `multipart/form-data; boundary=${formdata._boundary}`,
+            // "Content-Type": `multipart/form-data; boundary=${formdata._boundary}`,
             Authorization: "Bearer " + token,
           },
         })
@@ -96,8 +108,8 @@ const AddLocationPage = ({ fetchlocations }) => {
           />
         </label>
         <label>
-          <ProfileImage />
-         
+          {/* <ProfileImage />
+          */}
         </label>
         <button onClick={clickHandler} type="submit">Add New Location</button>
       </form>

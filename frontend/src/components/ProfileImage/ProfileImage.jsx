@@ -18,10 +18,16 @@ const handleImageChange = (e) => {
     setData(newData);
 };
 
+const refreshPage = () => {
+  window.location.reload(false);
+
+}
+
 const doSubmit = async (e) => {
     e.preventDefault();
     let form_data = new FormData();
   form_data.append("image_url", data)
+  refreshPage();
   
   try {
     let response = await axios
