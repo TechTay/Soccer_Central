@@ -10,8 +10,8 @@ import CreatePostForm from "../../components/CreatePostForm/CreatePostForm";
 import PostList from "../../components/Postlist/Postlist";
 import ProfileImage from "../../components/ProfileImage/ProfileImage";
 import JoinButton from "../../components/JoinAddFavButtons/JoinButton";
-import AddFavButton from "../../components/JoinAddFavButtons/AddFavButton";
-import { useParams } from "react-router-dom";
+import LocationImages from "../../components/LocationImages/LocationImages";
+
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
@@ -20,36 +20,49 @@ const HomePage = () => {
   const [user, token] = useAuth();
   const [locations, setLocations] = useState([]);
   const [posts, setPosts] = useState([]);
-  const [data, setData] = useState([""]);
   const [userLocations, setUserLocations] = useState([""]);
   const [userLocationHistory, setUserLocationHistory] = useState([""]);
   const [userImage, setUserImage] = useState([]);
-  const { image } = useParams();
-  const [locationImage, setLocationImage] = useState([]);
-  console.log(locationImage);
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const [locationImage, setLocationImage] = useState([{}]);
+  // const [data, setData] = useState([]);
+  // console.log(locationImage)
 
-    let form_data = new FormData();
-    form_data.append("image_url", data);
-  };
 
-  const patchlocationImage = async () => {
-    try {
-      let response = await axios.patch(
-        `http://127.0.0.1:8000/api/images/${image}/`,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: "Bearer " + token
-          },
-        }
-      );
-      setLocationImage(response.data);
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   }
+
+  //   const handleImageChange = (e) => {
+  //     let newData = { ...data };
+  //     newData = e.target.value;
+  //     setData(newData);
+  // };
+
+  //   const refreshPage = () => {
+  //     window.location.reload(true);
+  //   }
+
+  //   let form_data = new FormData();
+  //   form_data.append("image_url", data)
+  //   // refreshPage();
+
+  // const patchlocationImage = async (locationPk) => {
+  //   try {
+  //     let response = await axios.patch(
+  //       `http://127.0.0.1:8000/api/Locations/update/${locationPk.image_url}/`, form_data,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //           Authorization: "Bearer " + token
+  //         },
+  //       }
+  //     );
+  //     setLocationImage(response.data);
+  //   } catch (error) {
+  //     console.log(error.response);
+  //   }
+  // };
+  
 
   const fetchProfileImage = async () => {
     try {
@@ -133,7 +146,7 @@ const HomePage = () => {
     fetchUserLocations();
     fetchLocationHistory();
     fetchProfileImage();
-    patchlocationImage();
+    // patchlocationImage();
   }, [token]);
 
   return (
@@ -213,19 +226,22 @@ const HomePage = () => {
                   style={{ fontSize: "17px", padding: 5 }}
                   key={locations.id}
                 >
-                  {<JoinButton />} {<AddFavButton />}
+                  {<JoinButton />} 
                   <ul>{locations.title} </ul>
+                  {<LocationImages locationId= {locations.id}/>} 
                   <img
                     class="rounded float-start"
                     src={`http://127.0.0.1:8000${locations.image_url}`}
                     alt="location's image"
                   />
+                  
                   <ul>
                     {locations.address} {locations.time} {locations.date}
                   </ul>
                 </p>
               ))}
-
+{/* PATCH request Rendering */}
+                
             {locationImage &&
               locationImage.map((locationImage) => (
                 <p
@@ -233,9 +249,16 @@ const HomePage = () => {
                   style={{ fontSize: "17px", padding: 5 }}
                   key={locationImage.id}
                 >
-                  <ul>{locationImage.image_url} </ul>
+                  {/* <img
+              class="rounded float-start"
+              src={`http://127.0.0.1:8000${locationImage.image_url}`}
+              alt="location's image"
+            />  */}
                 </p>
               ))}
+              
+                
+
           </Tab>
 
           {/* third tab begins  */}

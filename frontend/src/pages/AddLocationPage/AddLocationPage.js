@@ -16,23 +16,6 @@ let initialValues = {
 const AddLocationPage = ({ fetchlocations }) => {
   const [user, token] = useAuth();
 
-  const alert = () => {
-    // <div class="alert alert-success">
-    //   You have successfully added a new location!
-    // </div>
-
-    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-  <div class="toast-header">
-    <img src="..." class="rounded me-2" alt="..."/>
-    <strong class="me-auto">Notification</strong>
-    <small>11 mins ago</small>
-    {/* <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button> */}
-  </div>
-  <div class="toast-body">
-  You have successfully added a new location!
-  </div>
-</div>
-  }
 
   const refreshPage = () => {
     window.location.reload(true);
@@ -41,7 +24,7 @@ const AddLocationPage = ({ fetchlocations }) => {
 
   const clickHandler = event => {
     refreshPage();
-    alert();
+    return alert();
   }
 
   const [formData, handleInputChange, handleSubmit, reset] = useCustomForm(
@@ -50,12 +33,10 @@ const AddLocationPage = ({ fetchlocations }) => {
   );
 
   async function postNewLocation(formdata) {
-    debugger
     try {
       let response = await axios
         .post("http://127.0.0.1:8000/api/Locations/", formdata, {
           headers: {
-            // "Content-Type": `multipart/form-data; boundary=${formdata._boundary}`,
             Authorization: "Bearer " + token,
           },
         })
