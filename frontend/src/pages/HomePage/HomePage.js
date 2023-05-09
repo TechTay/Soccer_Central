@@ -193,6 +193,7 @@ const HomePage = () => {
                   style={{ fontSize: "15px", padding: 10 }}
                   key={FavLocations.id}
                 >
+                  {<JoinButton />} 
                   {FavLocations.title}
                   <img
                     class="rounded float-start"
