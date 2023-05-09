@@ -3,30 +3,29 @@ import React from "react";
 import ProfileImage from "../../components/ProfileImage/ProfileImage";
 import useAuth from "../../hooks/useAuth";
 import useCustomForm from "../../hooks/useCustomForm";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 let initialValues = {
   title: "",
   address: "",
   date: "",
   time: "",
-  // image_url: ""
 };
 
 const AddLocationPage = ({ fetchlocations }) => {
   const [user, token] = useAuth();
 
+  const showToastMessage = () => {
+    toast.success('You have successfully added a new Location !', {
+        position: toast.POSITION.TOP_CENTER
+    });
+    setTimeout(function(){
+      window.location.reload();
+   }, 5700);
+};
 
-  const refreshPage = () => {
-    window.location.reload(true);
-
-  }
-
-  const clickHandler = event => {
-    refreshPage();
-    return alert();
-  }
-
+  
   const [formData, handleInputChange, handleSubmit, reset] = useCustomForm(
     initialValues,
     postNewLocation
@@ -45,6 +44,7 @@ const AddLocationPage = ({ fetchlocations }) => {
         .then(() => reset());
     } catch (error) {
       console.log(error);
+      
     }
   }
 
@@ -92,7 +92,8 @@ const AddLocationPage = ({ fetchlocations }) => {
           {/* <ProfileImage />
           */}
         </label>
-        <button onClick={clickHandler} type="submit">Add New Location</button>
+        <button onClick={showToastMessage} type="submit">Add New Location</button>
+        <ToastContainer />
       </form>
     </div>
   );

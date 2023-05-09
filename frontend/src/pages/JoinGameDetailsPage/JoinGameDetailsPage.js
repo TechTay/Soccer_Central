@@ -38,19 +38,19 @@ const JoinGameDetailsPage = () => {
       {location.user?.map((users) => {
         return (
           <div style={{ fontSize: "15px", padding: 10 }} key={users.id}>
-            <h2>Players in Attendance:</h2>
+            <h4>Players in Attendance:</h4>
             <p>{users.username}</p>
             <p>{user.username}</p>
             
             </div>
         )
       })}
-        <h2>Location Information:</h2>
+        <h4>Location Information:</h4>
         <ul>Name: {location.title}</ul>
         <ul>Address: {location.address}</ul> 
         <ul>Date of Play: {location.date}</ul>
         <ul>Start Time: {location.time}</ul>
-        <ul><img  
+        <ul><img 
               src={`http://127.0.0.1:8000${location.image_url}`}
               alt="location's image"
             /></ul>

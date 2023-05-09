@@ -151,6 +151,7 @@ const HomePage = () => {
 
   return (
     <div className="form">
+      <h1>{user.username}'s Dashboard</h1>
       <ProfileImage />
       <div>
         {userImage.map((userImage) => (
@@ -167,7 +168,6 @@ const HomePage = () => {
           </p>
         ))}
       </div>
-      <h1>{user.username}'s Dashboard</h1>
 
       <div
         className="form"
@@ -273,17 +273,15 @@ const HomePage = () => {
                     style={{ fontSize: "15px", padding: 5 }}
                     key={userHistory.id}
                   >
-                    <ul>
-                      {userHistory.date_of_play}
-                      {userHistory.location.address}
-                      {userHistory.location.title}
-                      {userHistory.location.date}
-                      {userHistory.location.time}
-                    </ul>
+                      <ul>{userHistory.location.title}</ul>
                     <img
                       class="rounded float-start"
                       src={`http://127.0.0.1:8000${userHistory.location.image_url}`}
-                    />
+                      />
+                      <ul>Time: {userHistory.location.time} pm</ul>
+                      {/* <ul>Day: {userHistory.location.date}</ul> */}
+                    <ul>Date played: {userHistory.date_of_play}</ul>
+                      <ul>Location: {userHistory.location.address}</ul>
                   </p>
                 );
               } else {

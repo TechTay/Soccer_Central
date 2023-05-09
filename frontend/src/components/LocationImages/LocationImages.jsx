@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import axios from "axios";
 import useAuth from "../../hooks/useAuth";
+import { ToastContainer, toast } from "react-toastify";
 
 const LocationImages = (locationPk) => {
     const [data, setData] = useState([]);
@@ -17,16 +18,23 @@ const handleImageChange = (e) => {
     setData(newData);
 };
 
-const refreshPage = () => {
-  window.location.reload(false);
 
-}
+
+const showToastMessage = () => {
+    toast.success('You have successfully updated a new location Image!', {
+        position: toast.POSITION.TOP_CENTER
+    });
+    setTimeout(function(){
+        window.location.reload();
+     }, 5700);
+};
+
 
 const doSubmit = async (e) => {
     e.preventDefault();
     let form_data = new FormData();
   form_data.append("image_url", data)
- 
+    showToastMessage();
   
   try {
     let response = await axios
@@ -39,7 +47,7 @@ const doSubmit = async (e) => {
   } catch (error) {
     console.log(error.response);
   }
-  refreshPage();
+  
 }
 
 return (
@@ -65,13 +73,9 @@ return (
         <Button className="form"
             variant="primary"
             type="edit"
-            onClick={(e) => doSubmit(e)}> Update!
+            onClick={(e) => doSubmit(e)}> Update Image!
         </Button>
-        {/* <Button className="form"
-            variant="primary"
-            type="edit"
-            onClick={(e) => doSubmit(e)}>
-        </Button> */}
+        <ToastContainer />
     </Form>
 );
 }
